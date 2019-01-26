@@ -5,7 +5,6 @@ int get_flag;
 extern Mat src_img ;
 extern vector<cv::Point2f> Points2D;
 extern vector<cv::Point2f> Points2D_1;
-
 void bubble_sorty(vector<Point2f> &arr, int len)
 {
 	if (len > 1)
@@ -17,7 +16,6 @@ void bubble_sorty(vector<Point2f> &arr, int len)
 					swap(arr[j], arr[j + 1]);
 	}
 }
-
 void bubble_sortx(vector<Point2f> &arr, int len)
 {
 	if (len > 1)
@@ -40,7 +38,6 @@ int ImageProcess(void)
 	vector<Vec4i> g_vHierarchy;
     Rect boundRect;
     RotatedRect minRect;
-
 #ifdef SAVE_IMG
 	char filename[20];
     time_t t = time(NULL);
@@ -49,11 +46,9 @@ int ImageProcess(void)
 	strcat(filename, ".png");
 	imwrite(filename, src_img);
 #endif
-
 #ifdef IMSHOW
-    imshow("original image", src_img);
+	imshow("Ô­Í¼", src_img);
 #endif
-
 	cvtColor(src_img, src_img, COLOR_RGB2GRAY);
     if (POINTS_NUM == 4)
     {
@@ -283,7 +278,7 @@ int ImageProcess(void)
                     bubble_sorty(Points3, Points3.size());
                     for(int j=0;j<Points1.size();j++)
                     {
-                        //cout<<"points1y:"<<Points1[j].y<<endl;
+//                        cout<<"points1y:"<<Points1[j].y<<endl;
                         if((Points1[last1].y-Points1[first1].y)>20)
                         {
                             if(Points1[j].y<(Points1[first1].y+Points1[last1].y)/2)
@@ -332,9 +327,9 @@ int ImageProcess(void)
                         for(int t=0;t<4;t++)
                         {
                             Points2D[t].x=0;
-                            Points2D[t].y=0;	
+                            Points2D[t].y=0;
                             Points2D_1[t].x=0;
-                            Points2D_1[t].y=0;			
+                            Points2D_1[t].y=0;
                         }
                         for(int n=0;n<Points11.size();n++)
                         {
@@ -381,23 +376,28 @@ int ImageProcess(void)
                         Points2D_1[3].x=Points2D_1[3].x/Points32.size();
                         Points2D_1[3].y=Points2D_1[3].y/Points32.size();
                         get_flag = true;
+#ifdef TEST
                         Mat imgRGB;
-                        cvtColor(src_img, imgRGB, COLOR_GRAY2RGB); 
+                        cvtColor(src_img, imgRGB, COLOR_GRAY2RGB);
                         for(int n=0;n<4;n++)
                         {
                             circle(imgRGB,Points2D[n],1,Scalar(0,0,255),-1,8);
                         }
                         circle(imgRGB,Points2D_1[2],1,Scalar(0,0,255),-1,8);
                         circle(imgRGB,Points2D_1[3],1,Scalar(0,0,255),-1,8);
-                        #ifdef IMSHOW
+#ifdef IMSHOW
                         imshow("pointimg",imgRGB);
-                        #endif
+#endif
+#endif
+                        //GetLocation();
                     }
                     else
                         get_flag = false;
+                    //return 0;
                 }
                 else
                     get_flag = false;
+                //return 0;
             }
             else
                 get_flag = false;
@@ -494,9 +494,9 @@ int ImageProcess(void)
                             for(int t=0;t<4;t++)
                             {
                                 Points2D[t].x=0;
-                                Points2D[t].y=0;	
+                                Points2D[t].y=0;
                                 Points2D_1[t].x=0;
-                                Points2D_1[t].y=0;			
+                                Points2D_1[t].y=0;
                             }
                             for(int n=0;n<Points11.size();n++)
                             {
@@ -543,17 +543,19 @@ int ImageProcess(void)
                             Points2D_1[3].x=Points2D_1[3].x/Points32.size();
                             Points2D_1[3].y=Points2D_1[3].y/Points32.size();
                             get_flag = true;
-                            #ifdef TEST
+#ifdef TEST
                             Mat imgRGB;
-                            cvtColor(src_img, imgRGB, COLOR_GRAY2RGB); 
+                            cvtColor(src_img, imgRGB, COLOR_GRAY2RGB);
                             for(int n=0;n<4;n++)
                             {
                                 circle(imgRGB,Points2D[n],1,Scalar(0,0,255),-1,8);
                             }
                             circle(imgRGB,Points2D_1[2],1,Scalar(0,0,255),-1,8);
                             circle(imgRGB,Points2D_1[3],1,Scalar(0,0,255),-1,8);
+#ifdef IMSHOW
                             imshow("pointimg",imgRGB);
-                            #endif
+#endif
+#endif
                             //GetLocation();
                         }
                         else
@@ -563,15 +565,13 @@ int ImageProcess(void)
                     else
                         get_flag = false;
                     //return 0;
-                }
+            }
                 else
                     get_flag = false;
         #endif
-
         #ifdef TEST
         cout<<"points11number:"<<Points11.size()<<"points12number:"<<Points12.size()<<"points21number:"<<Points21.size()<<"points22number:"<<Points22.size()<<"points31number:"<<Points31.size()<<"points32number:"<<Points32.size()<<endl;
         #endif
-
         return 0;
     }
 }

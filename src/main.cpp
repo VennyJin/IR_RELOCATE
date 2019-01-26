@@ -65,7 +65,7 @@ int main()
 #endif
 
 #ifdef USE_CAMERA   
-    VideoCapture capture(0);
+    VideoCapture capture(1);
     Mat frame;
 	capture.set(CV_CAP_PROP_FRAME_WIDTH, IMAGE_X);
 	capture.set(CV_CAP_PROP_FRAME_HEIGHT, IMAGE_Y);

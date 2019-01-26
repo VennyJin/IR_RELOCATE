@@ -66,7 +66,7 @@ extern Mat distortion_coefficients;
 #define TEXTSEND 1              //是否串口发送数据
 //#define IMSHOW 1                //是否显示图像
 #define TEST 1                  //是否显示数据
-//#define SAVE_AVI 1
+#define SAVE_AVI 1
 
 
 #define pi    3.14159265358979f

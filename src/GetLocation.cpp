@@ -2,10 +2,10 @@
 
 vector<cv::Point2f> Points2D;
 vector<cv::Point2f> Points2D_1;
-float goal_x[3];
-float goal_z[3];
-float goal_z3[3];
-float goal_theta[3];
+float goal_x[5];
+float goal_z[5];
+float goal_z3[5];
+float goal_theta[5];
 float z1,z3;
 float centertheta;
 extern int get_flag;
@@ -20,15 +20,6 @@ int64_t getCurrentTime()
        return tv.tv_sec * 1000 + tv.tv_usec / 1000;
     }
 
-float bubble_sort3(float *arr)
-{
-	if(arr[0] > arr[1])
-        swap(arr[0], arr[1]);
-    if(arr[1] > arr[2])
-        swap(arr[1], arr[2]);
-    if(arr[0] > arr[1])
-        swap(arr[0], arr[1]);
-}
 void bubble_sort(float *arr, int len)
 {
         if (len > 1)
@@ -40,6 +31,7 @@ void bubble_sort(float *arr, int len)
                                         swap(arr[j], arr[j + 1]);
         }
 }
+
 int GetLocation(void)
 {
     #ifdef TEST
@@ -270,10 +262,10 @@ int GetLocation(void)
 			//six points for one axis
 			vector<cv::Point3f> RealPoints3D6;
 			vector<cv::Point2f> Points2D6;
-            float temp_x[3];
-            float temp_z[3];
-            float temp_z3[3];
-            float temp_theta[3];
+            float temp_x[5];
+            float temp_z[5];
+            float temp_z3[5];
+            float temp_theta[5];
 			for(int k=0;k<4;k++)
 			{
 				RealPoints3D6.push_back(RealPoints3D[k]);
@@ -381,27 +373,35 @@ int GetLocation(void)
             #ifndef USE_IMAGE
             goal_x[0]=goal_x[1];
             goal_x[1]=goal_x[2];
-            goal_x[2]=x;
+            goal_x[2]=goal_x[3];
+            goal_x[3]=goal_x[4];
+            goal_x[4]=x;
             goal_z[0]=goal_z[1];
             goal_z[1]=goal_z[2];
-            goal_z[2]=z1;
+            goal_z[2]=goal_z[3];
+            goal_z[3]=goal_z[4];
+            goal_z[4]=z1;
             goal_z3[0]=goal_z3[1];
             goal_z3[1]=goal_z3[2];
-            goal_z3[2]=z3;
+            goal_z3[2]=goal_z3[3];
+            goal_z3[3]=goal_z3[4];
+            goal_z3[4]=z3;
             goal_theta[0]=goal_theta[1];
             goal_theta[1]=goal_theta[2];
-            goal_theta[2]=thetay;
-            for(int i=0;i<3;i++)
+            goal_theta[2]=goal_theta[3];
+            goal_theta[3]=goal_theta[4];
+            goal_theta[4]=thetay;
+            for(int i=0;i<5;i++)
             {
                 temp_x[i]=goal_x[i];
                 temp_z[i]=goal_z[i];
                 temp_z3[i]=goal_z3[i];
                 temp_theta[i]=goal_theta[i];
             }
-            bubble_sort3(temp_x);
-            bubble_sort3(temp_z);
-            bubble_sort3(temp_z3);
-            bubble_sort3(temp_theta);
+            bubble_sort(temp_x,5);
+            bubble_sort(temp_z,5);
+            bubble_sort(temp_z3,5);
+            bubble_sort(temp_theta,5);
             if(IMAGE_X == 640)
             {
                 /*x=(temp_x[0]+temp_x[1]+temp_x[2])/3;
@@ -415,10 +415,10 @@ int GetLocation(void)
             }
             if(IMAGE_X == 1280)
             {
-                x=temp_x[1];
-                z1=temp_z[1];
-                z3=temp_z3[1];
-                thetay=temp_theta[1];
+                x=temp_x[2];
+                z1=temp_z[2];
+                z3=temp_z3[2];
+                thetay=temp_theta[2];
                 //z1=z1*0.95538-46.366;//改6mm坐标之前
                 //z1=z1*0.95371+52.551;//改6mm坐标之后
                 //z1=z1*0.89764+94.093;//校正畸变之后的
@@ -451,15 +451,16 @@ int GetLocation(void)
 //            TestSend(z3,z1);
 		}
 	}
-	else 
-	{
-		z3 =0;
-		z1=0;
-		return 0;
-	}
+        else
+        {
+                z3 =0;
+                z1=0;
+                return 0;
+        }
 }
 
 
+//½Çµã¶ÔÓ¦
 int SetPoint2D()
 {
 	if (POINTS_NUM == 4)
