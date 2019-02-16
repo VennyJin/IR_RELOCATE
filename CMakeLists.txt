@@ -6,7 +6,7 @@ project(ir_relocate)
 add_compile_options(-std=c++11)
 #####################################################
 ################ PATH DEFINATION ####################
-
+################
 
 set(WORKSPACE_PATH "${CMAKE_CURRENT_LIST_DIR}/..")
 set(CL_OUTPUT_DIRECTORY ${WORKSPACE_PATH}/output)
